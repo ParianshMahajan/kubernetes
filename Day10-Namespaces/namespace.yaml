@@ -1,0 +1,37 @@
+# kubectl get ns
+
+# Another layer of isolation within cluster to separate objects/nodes within the cluster
+# By default, all the objects in the cluster are in the default namespace
+# kube-system namespace is created by default when the cluster is created and it contains all the control plane components
+
+
+
+# ---------------------Creating a namespace-----------------------------
+
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: demo-namespace
+  labels:
+    env: demo
+  
+# OR
+
+# kubectl create ns demo-namespace
+
+# ----------------------------------------------------------------------
+
+
+
+# kubectl get all --all-namespaces
+# kubectl get all --namespace kube-system   OR kubectl get all -n kube-system
+
+# kube-dns service inside the kube-system namespace is used to resolve the DNS queries within the cluster
+
+# Services running inside a namespace can communicate directly through their host names
+# Services/Pods running in different namespaces can communicate through IP addresses but these are not static 
+# Services/Pods running in different namespaces cannot communicate through their hostnames
+# Services/Pods running in different namespaces can communicate through the fully qualified domain name (FQDN)
+
+# FQDN is in /etc/resolv.conf file of the pod
+# FQDN -> <service-name>.<namespace>.svc.cluster.local

@@ -1,0 +1,26 @@
+# replication controller
+apiVersion: v1
+kind: ReplicationController
+metadata:
+  name: nginx-rc
+  labels:
+    env: demo
+spec:
+  template:
+    metadata:
+      name: nginx
+      labels:
+        env: demo
+    spec:
+      containers:
+        - name: nginx
+          image: nginx
+          ports:
+            - containerPort: 80
+  replicas: 3
+
+
+# kubectl create -f rc.yaml
+# kubectl get rc
+
+

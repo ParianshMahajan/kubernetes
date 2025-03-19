@@ -1,0 +1,32 @@
+# In deploy replica sets, multiple replica of pods runs in the cluster and can multiple pods can run on the same node 
+
+# DaemonSet -> Unlike deploy replica sets, daemon sets are used to run a copy of the pod on all the nodes running in the cluster
+#           -> Each pod runs on a separate node. No. of replicas = No. of nodes
+#           -> In case of new node added to the cluster, It detects the new node and create a new pod on the new node
+#           -> Monitoring Agent, Logging Agent, kubeproxy, Weave-net, flanet, calico etc are the examples of daemon sets
+
+# Monitoring/Logging Agent -> has to run all the time in each node to gather info from each node. Thats why daemon set is used
+# kubeproxy -> used to manage the network rules and port netwoking between nodes in the cluster... Necessary to run on each node
+
+apiVersion: apps/v1
+kind: DaemonSet
+metadata:
+  name: nginx-ds
+  labels:
+    env: demo
+spec:
+  template:
+    metadata:
+      name: nginx
+      labels:
+        env: demo
+    spec:
+      containers:
+        - name: nginx
+          image: nginx
+          ports:
+            - containerPort: 80
+  replicas: 3  
+  selector:
+    matchLabels:
+      env: demo

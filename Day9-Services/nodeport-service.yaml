@@ -1,0 +1,27 @@
+# kubectl get svc
+# NodePort service is used to expose the application running on the pod to the outside world
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: nodeport-svc
+  labels:
+    env: demo
+spec:
+  type: NodePort
+  selector:
+    env: demo
+  ports:
+    - port: 80
+      targetPort: 80
+      nodePort: 30001
+
+
+# And valid range of ports for NodePort is 30000-32767
+# whenevr we need to access any application running on the pod/node, we need to create a service to access it
+# nodeport -> It is the exposed port of the service
+# port -> It is the port on which the service is running
+# targetPort -> It is the port on which the container/node/pod/application is running    
+
+
+# kubectl expose deploy nginx-svc --port=80 --target-port=30001 or directly without yaml file

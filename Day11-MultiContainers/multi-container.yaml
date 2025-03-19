@@ -1,0 +1,38 @@
+# Running multiple containers in a pod
+# App -> Main Container
+
+# initContainer -> Container which runs before the main container
+#               -> Start of the App Container is dependent on the initContainer
+#               -> It dies/restarts with the app container
+
+# SideCar Container -> Container which runs along with the main container
+#                   -> It is used to enhance the functionality of the main container
+
+# MultiContainer Pod -> Pod which runs multiple containers SEQUENTIALLY 
+#                    -> All containers in a pod share the same network and storage and communicate with each other using localhost
+
+apiVersion: v1
+kind: Pod
+metadata:
+  name: multi-container
+  labels:
+    name: multi-container
+    env: demo
+spec:
+  containers:
+    - name: main-container
+      image: busybox:1.28     # Image that runs a task and exits || CrashLoopBackOff
+      command: ['sh', '-c', 'echo the app is running && sleep 3600']   # Command to run in the container
+      env:                    # Environment Variables
+        - name: FIRSTNAME
+          value: "pari"
+
+  initContainers:
+    - name: init-container
+      image: busybox:1.28 
+      command: ['sh', '-c'] # Command to run in the initContainer
+      args: ['until nslookup myservice.default.svc.cluster.local; do echo waiting for the service to be up;sleep 2; done'] # Arguments to the command
+
+
+# To check the logs of the specific container in the pod
+# kubectl logs multi-container -c <name-of-container>

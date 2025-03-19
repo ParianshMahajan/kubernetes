@@ -1,0 +1,32 @@
+# deployment 
+#    -- creates automatically and manages the replica set 
+#    -- in case of any changes in the pods of the replica set
+#       - usually the pods will be recreated and in between recreation there will be a downtime
+#       - but in case of deployment, the pods will be updated one by one and while updating a pod, traffic will be redirected to the other pods
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nginx-deploy
+  labels:
+    env: demo
+spec:
+  template:
+    metadata:
+      name: nginx
+      labels:
+        env: demo
+    spec:
+      containers:
+        - name: nginx
+          image: nginx
+          ports:
+            - containerPort: 80
+  replicas: 3
+  selector:
+    matchLabels:
+      env: demo
+
+# kubectl get all
+# kubectl rollout history deploy nginx-deploy
+# kubectl rollout undo deploy nginx-deploy --to-revision=1

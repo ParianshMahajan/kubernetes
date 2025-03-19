@@ -1,0 +1,14 @@
+# External Service is used to access the external application running on a dns to be accessed by the internal services on nodes/pods
+
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: external-svc
+  labels:
+    env: demo
+spec:
+  type: ExternalName
+  externalName: mydb.example.com
+
+# externalName -> It is the DNS name of the external service

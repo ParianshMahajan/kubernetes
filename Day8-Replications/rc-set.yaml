@@ -1,0 +1,29 @@
+# replica set 
+#    -- newer version of replication controller
+#    -- replication controller is deprecated and is only used to manage the pods of only that replication controller
+#    -- replica set is used to manage all the existing pods running even those which are not the part of the replica set 
+apiVersion: apps/v1
+kind: ReplicaSet
+metadata:
+  name: nginx-rs
+  labels:
+    env: demo
+spec:
+  template:
+    metadata:
+      name: nginx
+      labels:
+        env: demo
+    spec:
+      containers:
+        - name: nginx
+          image: nginx
+          ports:
+            - containerPort: 80
+  replicas: 5
+  selector:
+    matchLabels:
+      env: demo
+
+#  All the pods with label demo will be managed by this replica set
+# kubectl scale --replicas=8 rs nginx-rs

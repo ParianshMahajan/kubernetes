@@ -1,0 +1,24 @@
+# ClusterIP service is used to expose the application and make internal communication within the cluster
+# It is by default created when a cluster get created (kubectl get svc) runing on 443 port
+# It is used to expose the application running on the pod to the other pods running in the cluster
+# As whenever a pod restarted a new IP is assigned to it, So for handling it we use ClusterIP service
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: clusterip-svc
+  labels:
+    env: demo
+spec:
+  type: ClusterIP
+  selector:
+    env: demo
+  ports:
+    - port: 80
+      targetPort: 80
+
+# By default type is ClusterIP. We do not need to mention it under spec
+# port -> It is the port on which the service is running
+# targetPort -> It is the port on which the container/node/pod/application is running  
+# IPs of selected pods are in the endpoints section of the service
+# kubectl get ep

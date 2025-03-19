@@ -1,0 +1,18 @@
+# LoadBalancer Service is used to distribute traffic coming to the nodes of the cluster
+
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: loadbalancer-svc
+  labels:
+    env: demo
+spec:
+  type: LoadBalancer
+  selector:
+    env: demo
+  ports:
+    - port: 80
+
+# port -> It is the port on which the service is running
+# No external IP is assigned to the service as it is assigned by the cloud provider (External Load Balancer)
