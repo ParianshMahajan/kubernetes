@@ -26,7 +26,11 @@ spec:
           image: nginx
           ports:
             - containerPort: 80
-  replicas: 3  
   selector:
     matchLabels:
       env: demo
+
+
+# No need to mention replicas as it runs on all the nodes
+# On control plane node, it contains taint :- due to which daemon set pods are not scheduled on control plane node
+#                         because only control plane components can be scheduled on control plane node

@@ -30,3 +30,6 @@ spec:
 # kubectl get all
 # kubectl rollout history deploy nginx-deploy
 # kubectl rollout undo deploy nginx-deploy --to-revision=1
+
+# These revisions and rollback history and configuration is stored in the etcd database
+# But it is also stored in metadata - annotations

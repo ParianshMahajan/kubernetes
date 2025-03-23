@@ -1,0 +1,22 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: job-svc
+  labels:
+    env: demo
+spec:
+  template:
+    spec:
+      containers:
+        - name: job-demo-pod
+          image: busybox:1.28
+          imagePullPolicy: IfNotPresent
+          command:
+            - /bin/sh
+            - -c
+            - date; echo Hello from the Kubernetes cluster
+      restartPolicy: OnFailure
+
+
+# Difference between Job and CronJob is unlike CronJob, Job is used to run a job only once and not at specific time intervals
+# Just like a batch job or a bash script.

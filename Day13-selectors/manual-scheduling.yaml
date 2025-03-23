@@ -1,0 +1,19 @@
+# By default, Kube-scheduler checks the pods in the pending state queue and 
+# Pods consisting nodeName will be scheduled automatically without even need of kube-scheduler. 
+# Actual scheduling is done to pods with unspecified nodeName.
+
+apiVersion: v1
+kind: Pod
+metadata:
+  creationTimestamp: "2025-03-23T20:02:58Z"
+  labels:
+    run: nginx-pod
+  name: nginx-pod
+  namespace: default
+  resourceVersion: "712703"
+  uid: cada78a3-79dc-45ff-9d9e-054b3ab63073
+spec:
+  containers:
+  - image: nginx:latest
+    name: nginx-pod
+  nodeName: testing-cluster3-worker  # Manual scheduling by specifying nodeName

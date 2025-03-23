@@ -1,0 +1,36 @@
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: cronjob-svc
+  labels:
+    env: demo
+spec:
+  schedule: "*/1 * * * *" # Every minute
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          containers:
+            - name: cronjob-demo-pod
+              image: busybox:1.28
+              imagePullPolicy: IfNotPresent
+              command:
+                - /bin/sh
+                - -c
+                - date; echo Hello from the Kubernetes cluster
+          restartPolicy: OnFailure
+
+
+# Use Cases -> For log cleanup, For sending emails, For sending alerts, For taking backups, For running jobs at specific time intervals
+# schedule -> It is the time interval at which the cron job will run
+# jobTemplate -> It is the template for the job that will be created by the cron job
+# spec -> It is the specification of the job that will be created by the cron job
+# template -> It is the template for the pod that will be created by the job
+# spec -> It is the specification of the pod that will be created by the job
+# containers -> It is the list of containers that will be created by the pod
+# name -> It is the name of the container
+# image -> It is the image of the container
+# imagePullPolicy -> It is the policy for pulling the image
+# command -> It is the list of arguments that will be passed to the container
+# restartPolicy -> It is the policy for restarting the pod
+# OnFailure -> It is the policy for restarting the pod if it fails
